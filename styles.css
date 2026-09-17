@@ -1073,3 +1073,12 @@ footer a {
 .sources.is-ready .panel-head button {
   margin-left: auto;
 }
+
+/* Shared portfolio family: self-hosted type, quiet structure, distinct task marks. */
+.app-logo { display:block; width:32px; height:32px; flex-shrink:0; border-radius:6px; box-shadow:0 4px 10px oklch(20% 0 0 / .09),1px 2px 3px oklch(20% 0 0 / .1); }
+.mast .wordmark { letter-spacing:-.025em; }
+footer { flex-wrap:wrap; }
+.app-privacy { flex-basis:100%; max-width:72ch; margin-top:4px; padding-top:12px; border-top:1px solid var(--line); }
+.app-privacy summary { min-height:36px; font-size:.72rem; font-weight:500; }
+.app-privacy p { font-size:.72rem; line-height:1.7; }
+.app-privacy a { font-size:.7rem; }

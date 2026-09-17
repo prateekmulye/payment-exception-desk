@@ -1,0 +1,33 @@
+# Payment Exception Desk
+
+> Compare incoming bank credits with expected payments and export analyst-reviewed proposed associations.
+
+This is a personal software project by Prateek Mulye. It is free to use without an account. It does not represent an employer deployment or customer adoption.
+
+## Workspace and source
+
+- [Open Payment Exception Desk](https://payments.prateekmulye.dev/)
+- [Source code](https://github.com/prateekmulye/payment-exception-desk)
+- [Prateek Mulye's portfolio](https://prateekmulye.dev/)
+
+## What it does
+
+Inputs: Two UTF-8 CSV files, up to 5 MiB and 5,000 rows each.
+
+AI contribution: Xenova/all-MiniLM-L6-v2, executed locally with Transformers.js. The model ranks only candidates that meet exact amount, currency and date rules.
+
+Outputs: Review CSV, unresolved CSV and HTML evidence report.
+
+## Review and limitations
+
+Equal-amount, one-to-one incoming-credit matching. USD, EUR, GBP, CAD and INR. No ledger posting, money movement, split payments or FX conversion. Operational matching accuracy has not been established.
+
+A person reviews the findings. The application does not treat model output as an authorized external action. Functional checks and synthetic examples do not establish operational accuracy or business impact.
+
+## Data handling
+
+Input contents, decisions and exports are processed in the browser. The app does not upload input contents or persist review sessions across reloads. Public runtime and model files are downloaded only when the user starts AI analysis; hosting providers can receive ordinary request metadata. Public model assets may remain cached. No account, analytics or input-content telemetry is required.
+
+## Attribution
+
+Author: Prateek Mulye, Senior Software Engineer and applied AI practitioner.

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /vendor/
+Disallow: /models/
+Sitemap: https://payments.prateekmulye.dev/sitemap.xml

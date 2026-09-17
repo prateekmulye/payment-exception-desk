@@ -4,6 +4,10 @@ Review incoming bank credits against expected payments. Exact amount, currency a
 
 Built by [Prateek Mulye](https://prateekmulye.dev/).
 
+[Live application](https://payments.prateekmulye.dev/) · [Source](https://github.com/prateekmulye/payment-exception-desk)
+
+Hosted as a static application on Cloudflare Pages. Model inference runs on your device in a browser worker.
+
 ## Run locally
 
 Use Node.js 22 or later, Python 3 and `tar`. Run these commands from this directory. No `npm install` is needed.

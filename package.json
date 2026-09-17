@@ -8,6 +8,7 @@
   },
   "scripts": {
     "check": "node checks.mjs",
-    "prepare:assets": "node prepare.mjs"
+    "prepare:assets": "node prepare.mjs",
+    "check:discovery": "node check-discovery.mjs ."
   }
 }
