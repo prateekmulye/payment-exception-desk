@@ -1,0 +1,13 @@
+{
+  "name": "payment-exception-desk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "node checks.mjs",
+    "prepare:assets": "node prepare.mjs"
+  }
+}

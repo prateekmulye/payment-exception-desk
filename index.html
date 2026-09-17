@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+    <title>Payment Exception Desk</title>
+    <meta
+      name="description"
+      content="Compare incoming credits with expected payments. Keep the source beside every proposed match."
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to workspace</a>
+    <header class="mast">
+      <div class="wordmark">
+        <span class="mark" aria-hidden="true">↔</span>Payment Exception Desk
+      </div>
+      <nav aria-label="Workspace">
+        <a href="https://prateekmulye.dev/">By Prateek Mulye</a
+        ><button type="button" id="reset" class="quiet">Start over</button>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <div class="intro">
+        <div>
+          <p class="eyebrow">Payment operations / Review workspace</p>
+          <h1>Review incoming payments</h1>
+          <p>
+            Compare incoming credits with expected payments. Keep the source
+            beside every proposed match.
+          </p>
+        </div>
+        <aside class="session-note">
+          A working session in your browser.<br />Export your review before
+          closing or reloading.
+        </aside>
+      </div>
+      <noscript
+        ><p class="status error">
+          JavaScript is needed to read your files and run this tool. No files
+          have been uploaded.
+        </p></noscript
+      >
+      <section class="panel sources" aria-labelledby="sources-title">
+        <div class="panel-head">
+          <h2 id="sources-title">
+            01 <span class="muted">/</span> Source files
+          </h2>
+          <span class="eyebrow">CSV · 5,000 rows per file</span>
+        </div>
+        <div class="panel-body">
+          <div class="source-grid">
+            <div>
+              <div class="file-well">
+                <label for="bank-file"
+                  ><strong>Received bank credits</strong></label
+                >
+                <p>
+                  Positive credits, booking dates and original descriptions.
+                </p>
+                <input
+                  id="bank-file"
+                  type="file"
+                  accept=".csv,text/csv"
+                  aria-describedby="bank-file-info"
+                /><small id="bank-file-info" class="file-name"
+                  >Choose a CSV up to 5 MiB.</small
+                ><button class="quiet small" id="bank-template" type="button">
+                  Download column template
+                </button>
+              </div>
+              <div id="bank-mapping"></div>
+            </div>
+            <div>
+              <div class="file-well">
+                <label for="expected-file"
+                  ><strong>Expected payments</strong></label
+                >
+                <p>Expected dates, counterparties and payment references.</p>
+                <input
+                  id="expected-file"
+                  type="file"
+                  accept=".csv,text/csv"
+                  aria-describedby="expected-file-info"
+                /><small id="expected-file-info" class="file-name"
+                  >Choose a CSV up to 5 MiB.</small
+                ><button
+                  class="quiet small"
+                  id="expected-template"
+                  type="button"
+                >
+                  Download column template
+                </button>
+              </div>
+              <div id="expected-mapping"></div>
+            </div>
+          </div>
+          <div class="import-bar">
+            <label class="inline-field" for="date-window"
+              >Date window, days either side<input
+                id="date-window"
+                type="number"
+                min="0"
+                max="7"
+                step="1"
+                value="3"
+            /></label>
+            <div class="actions">
+              <button type="button" id="validate" class="primary">
+                Validate and open review
+              </button>
+            </div>
+          </div>
+          <p class="privacy">
+            USD, EUR, GBP, CAD and INR. Equal-amount, one-to-one proposals only.
+            This tool does not update bank or accounting records.
+          </p>
+        </div>
+      </section>
+      <div id="status" class="status" role="status" aria-live="polite">
+        Choose both source files to begin. Nothing is preloaded.
+      </div>
+      <section id="analysis-controls" class="panel" hidden>
+        <div class="panel-body">
+          <div class="actions">
+            <button id="analyze" class="primary" type="button">
+              Rank descriptions with AI</button
+            ><button id="cancel" type="button" hidden>Stop analysis</button
+            ><span class="muted" id="analysis-summary"></span>
+          </div>
+          <p class="privacy" id="model-note">
+            Optional on-device model. Preparing download information.
+          </p>
+          <p class="privacy">
+            Exact-reference and text-overlap suggestions are available now.
+            Every association still needs your decision. Ranking accuracy has
+            not yet been measured on operational payment data. When more than
+            250 records are eligible, the initial list keeps source order and
+            any unique reference match. All eligible records remain available.
+          </p>
+        </div>
+      </section>
+      <div class="workspace" id="workspace" hidden>
+        <section class="panel queue" aria-labelledby="queue-title">
+          <div class="panel-head">
+            <h2 id="queue-title">02 / Incoming credits</h2>
+            <span id="queue-count" class="eyebrow"></span>
+          </div>
+          <div class="queue-toolbar">
+            <label for="filter" class="eyebrow">Show</label
+            ><select id="filter">
+              <option value="all">All credits</option>
+              <option value="unreviewed">Unreviewed</option>
+              <option value="proposed_match">Proposed matches</option>
+              <option value="unresolved">Unresolved</option>
+              <option value="out_of_scope">Out of scope</option>
+            </select>
+          </div>
+          <div id="queue-list" class="queue-list"></div>
+          <div class="pager">
+            <button id="previous-page" type="button" class="small">
+              Previous</button
+            ><span id="page-count"></span
+            ><button id="next-page" type="button" class="small">Next</button>
+          </div>
+        </section>
+        <section class="panel review" aria-labelledby="review-title">
+          <div class="panel-head">
+            <h2 id="review-title">Review an association</h2>
+            <span id="decision-state" class="tag">Awaiting selection</span>
+          </div>
+          <div id="review-body">
+            <div class="empty">
+              <span class="empty-sign" aria-hidden="true">↔</span>
+              <h3>Compare before you propose.</h3>
+              <p>
+                Select a credit to inspect its source and eligible expected
+                payments.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <section id="export-area" class="panel export" hidden>
+        <div>
+          <h2>03 / Review exports</h2>
+          <p id="export-counts"></p>
+          <p>Unreviewed credits remain unresolved in the export.</p>
+        </div>
+        <div class="actions">
+          <button id="export-review" type="button">Review CSV</button
+          ><button id="export-unresolved" type="button">Unresolved CSV</button
+          ><button id="export-evidence" type="button" class="primary">
+            Evidence report
+          </button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span>Built by <a href="https://prateekmulye.dev/">Prateek Mulye</a></span
+      ><span>No account. No records changed outside this review.</span>
+    </footer>
+  </body>
+</html>
